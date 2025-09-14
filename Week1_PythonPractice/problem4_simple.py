@@ -1,12 +1,6 @@
 """
-Problem 4: Is Alien Sorted
-In an alien language, surprisingly, they also use English lowercase letters, 
-but possibly in a different order. The order of the alphabet is some 
-permutation of lowercase letters.
-
-Write a function isAlienSorted that takes a sequence of words written in the 
-alien language, and the order of the alphabet as input, return true if and only 
-if the given words are sorted lexicographically in this alien language.
+Problem 4: Is Alien Sorted - Simple Version
+Using for word in words and for char in word style
 """
 
 def isAlienSorted(words, order):
@@ -21,34 +15,45 @@ def isAlienSorted(words, order):
         True if words are sorted, False otherwise
     """
     # Go through each word in the list
-    for i in range(len(words) - 1):
-        word1 = words[i]
-        word2 = words[i + 1]
-        
-        # Go through each character in the first word
-        for j in range(min(len(word1), len(word2))):
-            char1 = word1[j]
-            char2 = word2[j]
+    i = 0
+    for word1 in words:
+        # Make sure we don't go past the last word
+        if i < len(words) - 1:
+            word2 = words[i + 1]
             
-            # Find where each character appears in the alien alphabet
-            position1 = order.find(char1)
-            position2 = order.find(char2)
+            # Go through each character in the first word
+            j = 0
+            for char1 in word1:
+                # Make sure we don't go past the end of the second word
+                if j >= len(word2):
+                    break
+                    
+                char2 = word2[j]
+                
+                # Find where each character appears in the alien alphabet
+                position1 = order.find(char1)
+                position2 = order.find(char2)
+                
+                # If first word's character comes after second word's character, not sorted
+                if position1 > position2:
+                    return False
+                # If first word's character comes before second word's character, they're sorted
+                elif position1 < position2:
+                    break
+                # If characters are the same, check the next character
+                
+                # Move to the next character
+                j = j + 1
             
-            # If first word's character comes after second word's character, not sorted
-            if position1 > position2:
+            # If all characters were the same, shorter word should come first
+            if len(word1) > len(word2):
                 return False
-            # If first word's character comes before second word's character, they're sorted
-            elif position1 < position2:
-                break
-            # If characters are the same, check the next character
         
-        # If all characters were the same, shorter word should come first
-        if len(word1) > len(word2):
-            return False
+        # Move to the next word
+        i = i + 1
     
     # If we checked all word pairs and they were all in order, the list is sorted
     return True
-
 
 # Test cases
 def test_isAlienSorted():
@@ -97,7 +102,6 @@ def test_isAlienSorted():
     print(f"Are words sorted? {result4}")
     print(f"Expected: True (because 'cat' < 'dog' < 'elephant' alphabetically)")
     print()
-
 
 if __name__ == "__main__":
     test_isAlienSorted()

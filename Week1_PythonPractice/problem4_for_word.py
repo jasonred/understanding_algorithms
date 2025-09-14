@@ -1,12 +1,5 @@
 """
-Problem 4: Is Alien Sorted
-In an alien language, surprisingly, they also use English lowercase letters, 
-but possibly in a different order. The order of the alphabet is some 
-permutation of lowercase letters.
-
-Write a function isAlienSorted that takes a sequence of words written in the 
-alien language, and the order of the alphabet as input, return true if and only 
-if the given words are sorted lexicographically in this alien language.
+Problem 4: Is Alien Sorted - Using for word in words
 """
 
 def isAlienSorted(words, order):
@@ -48,7 +41,6 @@ def isAlienSorted(words, order):
     
     # If we checked all word pairs and they were all in order, the list is sorted
     return True
-
 
 # Test cases
 def test_isAlienSorted():
@@ -97,7 +89,6 @@ def test_isAlienSorted():
     print(f"Are words sorted? {result4}")
     print(f"Expected: True (because 'cat' < 'dog' < 'elephant' alphabetically)")
     print()
-
 
 if __name__ == "__main__":
     test_isAlienSorted()
