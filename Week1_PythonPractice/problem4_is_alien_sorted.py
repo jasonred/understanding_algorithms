@@ -30,55 +30,40 @@ def isAlienSorted(words, order):
     # Step 2: Compare each pair of adjacent words
     # We need to check if words[0] <= words[1] <= words[2] <= ... <= words[n-1]
     for i in range(len(words) - 1):
-        current_word = words[i]
-        next_word = words[i + 1]
+        word1 = words[i]
+        word2 = words[i + 1]
         
-        # If any pair is not in order, the whole list is not sorted
-        if not are_words_in_order(current_word, next_word, char_to_order):
+        # Step 3: Compare these two words character by character
+        # Find the length of the shorter word so we don't go out of bounds
+        shorter_length = len(word1)
+        if len(word2) < shorter_length:
+            shorter_length = len(word2)
+        
+        # Compare each character position by position
+        for j in range(shorter_length):
+            char1 = word1[j]
+            char2 = word2[j]
+            
+            # Get the order of each character in the alien alphabet
+            order1 = char_to_order[char1]
+            order2 = char_to_order[char2]
+            
+            # If word1's character comes after word2's character, they're not in order
+            if order1 > order2:
+                return False
+            # If word1's character comes before word2's character, they are in order
+            elif order1 < order2:
+                break
+            # If characters are equal, we need to check the next character
+            # (this is handled by the loop continuing)
+        
+        # If we've compared all characters and they were all equal,
+        # check if the first word is shorter or equal length
+        if len(word1) > len(word2):
             return False
     
     # If we checked all pairs and they were all in order, the list is sorted
     return True
-
-
-def are_words_in_order(word1, word2, char_to_order):
-    """
-    Check if word1 comes before or is equal to word2 according to alien alphabet order.
-    
-    Args:
-        word1: First word
-        word2: Second word  
-        char_to_order: Dictionary mapping characters to their order
-        
-    Returns:
-        True if word1 <= word2, False otherwise
-    """
-    # Find the length of the shorter word so we don't go out of bounds
-    shorter_length = len(word1)
-    if len(word2) < shorter_length:
-        shorter_length = len(word2)
-    
-    # Compare each character position by position
-    for i in range(shorter_length):
-        char1 = word1[i]
-        char2 = word2[i]
-        
-        # Get the order of each character in the alien alphabet
-        order1 = char_to_order[char1]
-        order2 = char_to_order[char2]
-        
-        # If word1's character comes before word2's character, word1 is smaller
-        if order1 < order2:
-            return True
-        # If word1's character comes after word2's character, word1 is larger
-        elif order1 > order2:
-            return False
-        # If characters are equal, we need to check the next character
-        # (this is handled by the loop continuing)
-    
-    # If we've compared all characters and they were all equal,
-    # the shorter word comes first (or they're the same length)
-    return len(word1) <= len(word2)
 
 
 # Test cases
